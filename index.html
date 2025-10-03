@@ -3,57 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo - iki</title>
-
-
-    <!-- CSS External -->
-    <link rel="stylesheet" href="css\style.css">
+    <title>Ikipuy Todo App</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="bg-pink-100">
+<body class="bg-gray-500 text-slate-100 p-6">
 
     <!-- Header -->
     <header>
-        <h1 class="text-3xl font-bold">Ikipuy Todo App</h1>
+        <h1 class="text-3xl font-bold mb-6">Ikipuy Todo App</h1>
     </header>
 
-    <!-- main content -->
-    <main>
-        <!-- Form Todo -->
-        <section>
-            <form id="todo-form">
-                <input type="text" class="border rounded p-[8px]" id="todo-input" placeholder="Enter your todo... " required>
-                <input type="date" class="border rounded p-[8px]" id="todo-date" required>
-                <button type="button" onclick="addTodo()" class="bg-blue-500 rounded tetx-white p-[8px]"> Add Todo</button>
-            </form>
-        </section>
-    </main>
+    <!-- Form Todo -->
+    <section class="bg-pink-900 p-6 rounded-2xl shadow-lg mb-6">
+        <form id="todo-form" class="flex flex-col sm:flex-row gap-3 items-center mb-4">
+            <input type="text" id="todo-input" 
+                class="flex-1 border rounded p-2 bg-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400" 
+                placeholder="Enter your todo..." required>
+            <input type="date" id="todo-date" 
+                class="border rounded p-2 bg-red-700 text-white" required>
+            <button type="button" onclick="addTodo()" 
+                class="bg-blue-500 rounded text-white p-2">AddTodo</button>
+        </form>
+    </section>
 
     <!-- Action Buttons -->
-    <section class="mt-[16px] flex gap-2">
-        <button class="bg-red-500 rounded text-white p-[8px]" onclick="deleteAllTodo" >Delete All</button>
-        <button class="bg-green-500 text-white p-[8px]" >Fillter</button>
-        
+    <section class="flex gap-2 mb-6">
+        <button class="bg-red-500 rounded text-white p-2" onclick="deleteAllTodo()">DeleteAll</button>
+        <button class="bg-green-500 rounded text-white p-2" onclick="filterTodo()">FilterToday</button>
+        <button class="bg-gray-700 rounded text-white p-2" onclick="renderTodo()">ShowAll</button>
     </section>
 
     <!-- List Todo -->
-     <section class="mt-[16px]">
-        <ul id="todo-list" class="mt-4">
-             <!-- Todo items will be appended here -->
-              <p class="text-center text-gray-500">No todos yet. Add one above!</p>
+    <section>
+        <ul id="todo-list">
+            <p class="text-center text-gray-400">No todos yet. Add one above!</p>
         </ul>
-     </section>
+    </section>
 
-    <!-- footer -->
-    <Footer>
+    <!-- Footer -->
+    <footer class="mt-6">
         <p>&copy; 2025 Ikipuy Todo App</p>
-    </Footer>
+    </footer>
 
     <!-- Javascript -->
     <script src="js\script.js"></script>
 </body>
-
 </html>

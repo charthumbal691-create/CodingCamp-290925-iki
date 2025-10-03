@@ -1,59 +1,87 @@
-///Initiallize an empaty array to store todo items 
+// Inisialisasi array untuk menyimpan todo
 let todos = [];
 
+// Tambah todo
 function addTodo() {
-    ///Get input values
-    const todoInput = document.getElementById("todo-input") ;
-    const todoDate = document.getElementById("todo-date") ;
+    const todoInput = document.getElementById("todo-input");
+    const todoDate = document.getElementById("todo-date");
 
-    ///validate input
     if (validateInput(todoInput.value, todoDate.value)) {
-        let todo= { task: todoInput.value, date: todoDate.value };
+        let todo = { task: todoInput.value, date: todoDate.value };
         todos.push(todo);
 
-        ///Render the updated todo list
         renderTodo();
+
+        // Reset input
+        todoInput.value = '';
+        todoDate.value = '';
     }
 }
 
-function renderTodo() { 
-    ///Get the todo list container
+// Render todo
+function renderTodo() {
     const todoList = document.getElementById("todo-list");
-
-    ///Clear existing List
     todoList.innerHTML = '';
 
-    ///Render each todo item
+    if (todos.length === 0) {
+        todoList.innerHTML = `<p class="text-center text-gray-400">No todos yet. Add one above!</p>`;
+        return;
+    }
+
     todos.forEach((todo, index) => {
-        todoList.innerHTML += `<li class="border p-2 mb-2 flex justify-between items-center">
+        todoList.innerHTML += `
+        <li class="border p-2 mb-2 flex justify-between items-center rounded-lg bg-slate-700">
             <div>
                 <p class="font-bold">${todo.task}</p>
-                <p class="text-sm text-gray-500">${todo.date}</p>
-            </div>  
-            <button onclick="deleteTodo(${index})" class="bg-red-500 text-white p-1 rounded">Delete</button>
+                <p class="text-sm text-gray-400">${todo.date}</p>
+            </div>
+            <button onclick="deleteTodo(${index})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
         </li>`;
-    })
+    });
 }
 
-function deleteAllTodo() { 
-    ///Clear the todo list
-    todos = [];
-
-    ///Render the empaty  todo list
+// Hapus satu todo
+function deleteTodo(index) {
+    todos.splice(index, 1);
     renderTodo();
 }
 
-function filterTodo() { }
+// Hapus semua todo
+function deleteAllTodo() {
+    todos = [];
+    renderTodo();
+}
 
-///Validate input fields
+// Filter todo hari ini
+function filterTodo() {
+    const today = new Date().toISOString().split('T')[0]; 
+    const filtered = todos.filter(todo => todo.date === today);
+
+    const todoList = document.getElementById("todo-list");
+    todoList.innerHTML = '';
+
+    if (filtered.length === 0) {
+        todoList.innerHTML = `<p class="text-center text-gray-400">No todos for today!</p>`;
+        return;
+    }
+
+    filtered.forEach((todo, index) => {
+        todoList.innerHTML += `
+        <li class="border p-2 mb-2 flex justify-between items-center rounded-lg bg-slate-700">
+            <div>
+                <p class="font-bold">${todo.task}</p>
+                <p class="text-sm text-gray-400">${todo.date}</p>
+            </div>
+            <button onclick="deleteTodo(${todos.indexOf(todo)})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+        </li>`;
+    });
+}
+
+// Validasi input
 function validateInput(todo, date) {
-    ///Check if fields are empaty
-    if (todo === '' || !date === '') {
-        ///Show an alert if validation fails
+    if (todo === '' || date === '') {
         alert("Please fill in all fields");
         return false;
     }
-
-    ///Input is valid
     return true;
 }
